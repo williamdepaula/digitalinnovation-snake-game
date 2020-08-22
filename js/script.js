@@ -2,6 +2,13 @@ let canvas = document.getElementById('snake')
 let context = canvas.getContext("2d")
 let box = 32
 let snake = []
+
+const KEY_LEFT = 37
+const KEY_UP = 38
+const KEY_RIGHT = 39
+const KEY_DOWN = 40
+
+
 snake[0] = {
     x: box,
     y: box
@@ -21,7 +28,22 @@ function criarCobrinha() {
     }
 }
 
+function update(event) {
+    if(event.keyCode == KEY_LEFT && direction != "right") direction = 'left'
+    if(event.keyCode == KEY_UP && direction != "down") direction = 'up'
+    if(event.keyCode == KEY_RIGHT && direction != "left") direction = 'right'
+    if(event.keyCode == KEY_DOWN && direction != "up") direction = 'down'
+
+}
+
+document.addEventListener('keydown', update)
+
 function iniciarJogo() {
+    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0
+    if(snake[0].x < 0 * box && direction == "left") snake[0].x = 15 * box
+    if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0
+    if(snake[0].y < 0 * box && direction == "up") snake[0].y = 15 * box
+
     criarBG()
     criarCobrinha();
 
@@ -45,4 +67,4 @@ function iniciarJogo() {
 
 }
 
-let jogo = setInterval(iniciarJogo, 100)
+let jogo = setInterval(iniciarJogo, 200)
